@@ -10,12 +10,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import com.training.microservices.commons.students.models.entity.Student;
+import com.training.microservices.commons.tests.models.entity.Test;
 
 
 @Entity
@@ -33,6 +35,9 @@ public class Course {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Student> students;
 	
+	@ManyToMany(fetch = FetchType.LAZY)
+	private List<Test> tests;
+	
 	@PrePersist
 	public void prePersist() {
 		this.createAt = new Date();
@@ -40,6 +45,7 @@ public class Course {
 
 	public Course() {
 		this.students = new ArrayList<>();
+		this.tests = new ArrayList<>();
 	}
 
 
@@ -75,12 +81,28 @@ public class Course {
 		this.students = students;
 	}
 	
-	public void addStudents(Student student) {
+	public void addStudent(Student student) {
 		this.students.add(student);
 	}
 	
-	public void removeStudents(Student student) {
+	public void removeStudent(Student student) {
 		this.students.remove(student);
+	}
+	
+	public void addTest(Test test) {
+		this.tests.add(test);
+	}
+	
+	public void removeTest(Test test) {
+		this.tests.remove(test);
+	}
+
+	public List<Test> getTests() {
+		return tests;
+	}
+
+	public void setTests(List<Test> tests) {
+		this.tests = tests;
 	}
 	
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.training.microservices.commons.controllers.CommonController;
 import com.training.microservices.commons.students.models.entity.Student;
+import com.training.microservices.commons.tests.models.entity.Test;
 import com.training.microservices.courses.models.entity.Course;
 import com.training.microservices.courses.services.CourseService;
 
@@ -37,7 +38,7 @@ public class CourseController extends CommonController<Course, CourseService> {
 		}
 		Course course = c.get();
 		students.forEach(s ->{
-			course.addStudents(s);
+			course.addStudent(s);
 		});
 		return ResponseEntity.ok(service.save(course));	
 	}
@@ -49,12 +50,36 @@ public class CourseController extends CommonController<Course, CourseService> {
 			return ResponseEntity.notFound().build();
 		}
 		Course course = c.get();
-		course.removeStudents(student);
+		course.removeStudent(student);
 		return ResponseEntity.ok(service.save(course));	
 	}
 	
 	@GetMapping("/student/{id}")
 	public ResponseEntity<?> findCourseByStudentId(@PathVariable Long id){
 		return ResponseEntity.ok(service.findCourseByStudentId(id));	
+	}
+	
+	@PutMapping("/{id}/add-tests")
+	public ResponseEntity<?> addTests(@PathVariable Long id, @RequestBody List<Test> tests){
+		Optional<Course> c = service.findById(id);
+		if(c.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		Course course = c.get();
+		tests.forEach(t ->{
+			course.addTest(t);
+		});
+		return ResponseEntity.ok(service.save(course));	
+	}
+	
+	@PutMapping("/{id}/remove-test")
+	public ResponseEntity<?> removeTest(@PathVariable Long id, @RequestBody Test tests){
+		Optional<Course> c = service.findById(id);
+		if(c.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		Course course = c.get();
+		course.removeTest(tests);
+		return ResponseEntity.ok(service.save(course));	
 	}
 }
