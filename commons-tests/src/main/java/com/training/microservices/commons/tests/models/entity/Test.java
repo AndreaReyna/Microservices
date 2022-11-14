@@ -17,6 +17,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -27,6 +30,8 @@ public class Test {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotEmpty
+	@Size(min = 4, max = 50)
 	private String name;
 
 	@JsonIgnoreProperties(value = {"test"}, allowSetters = true)
@@ -34,6 +39,7 @@ public class Test {
 	private List<Question> questions;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull
 	private Subject subject;
 	
 	@Column(name = "create_at")

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,7 +22,10 @@ import com.training.microservices.courses.services.CourseService;
 public class CourseController extends CommonController<Course, CourseService> {
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> modify(@RequestBody Course course, @PathVariable Long id){
+	public ResponseEntity<?> modify(@Validated @RequestBody Course course, BindingResult result, @PathVariable Long id){
+		if	(result.hasErrors()) {
+			return this.validate(result);
+		}
 		Optional<Course> c = service.findById(id);
 		if(c.isEmpty()) {
 			return ResponseEntity.notFound().build();

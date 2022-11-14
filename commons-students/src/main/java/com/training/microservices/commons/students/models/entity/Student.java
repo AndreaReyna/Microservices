@@ -11,6 +11,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="students")
@@ -19,8 +22,15 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotEmpty
+	@Size(min = 3, max = 100)
 	private String name;
+	@NotEmpty
+	@Size(min = 3, max = 100)
 	private String lastName;
+	@NotEmpty
+	@Size(min = 3, max = 100)
+	@Email
 	private String email;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)

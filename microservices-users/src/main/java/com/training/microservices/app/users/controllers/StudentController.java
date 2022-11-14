@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,7 +20,10 @@ import com.training.microservices.commons.students.models.entity.Student;
 public class StudentController extends CommonController<Student, StudentService>{
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> modify(@PathVariable Long id, @RequestBody Student studentBody){
+	public ResponseEntity<?> modify(@Validated @PathVariable Long id, @RequestBody Student studentBody, BindingResult result){
+		if	(result.hasErrors()) {
+			return this.validate(result);
+		}
 		Optional<Student> student = service.findById(id);
 		if(student.isEmpty()) {
 			return ResponseEntity.notFound().build();	

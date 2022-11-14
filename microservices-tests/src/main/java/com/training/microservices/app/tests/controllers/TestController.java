@@ -3,6 +3,8 @@ package com.training.microservices.app.tests.controllers;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +19,10 @@ import com.training.microservices.commons.tests.models.entity.Test;
 public class TestController extends CommonController<Test, TestService>{
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> modify (@RequestBody Test test, @PathVariable Long id){
+	public ResponseEntity<?> modify (@Validated @RequestBody Test test, BindingResult result, @PathVariable Long id){
+		if	(result.hasErrors()) {
+			return this.validate(result);
+		}
 		Optional<Test> o = service.findById(id);
 		if(!o.isPresent()) {
 			return ResponseEntity.notFound().build();
@@ -29,7 +34,6 @@ public class TestController extends CommonController<Test, TestService>{
 		testDb.getQuestions().stream()
 		.filter(q -> !test.getQuestions().contains(q))
 		.forEach(testDb::removeQuestion);
-
 		
 		testDb.setQuestions(test.getQuestions());
 		
