@@ -1,9 +1,12 @@
 package com.training.microservices.courses.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -21,6 +24,9 @@ import com.training.microservices.courses.services.CourseService;
 
 @RestController
 public class CourseController extends CommonController<Course, CourseService> {
+	
+	@Value("${config.balancer.test}")
+	private String balancerTest;
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> modify(@Validated @RequestBody Course course, BindingResult result, @PathVariable Long id){
@@ -99,4 +105,13 @@ public class CourseController extends CommonController<Course, CourseService> {
 		course.removeTest(tests);
 		return ResponseEntity.ok(service.save(course));	
 	}
+
+	@GetMapping("/balancer-test")
+	public ResponseEntity<?> balancerTest() {
+		Map<String, Object> response = new HashMap<String, Object>();
+		response.put("balancer", balancerTest);
+		response.put("courses", service.findAll());
+		return ResponseEntity.ok(response);
+	}
+	
 }
