@@ -2,6 +2,7 @@ package com.training.microservices.courses.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -61,7 +62,18 @@ public class CourseController extends CommonController<Course, CourseService> {
 	
 	@GetMapping("/student/{id}")
 	public ResponseEntity<?> findCourseByStudentId(@PathVariable Long id){
-		return ResponseEntity.ok(service.findCourseByStudentId(id));	
+		Course course = service.findCourseByStudentId(id);
+		if (course != null) {
+			List<Long> testsIds = (List<Long>) service.getTestsIdsWithAnswersByStudent(id);
+			List<Test> tests = course.getTests().stream().map(test -> {
+				if(testsIds.contains(test.getId())) {
+					test.setAnswered(true);
+				}
+				return test;
+			}).collect(Collectors.toList());
+			course.setTests(tests);
+		}
+		return ResponseEntity.ok(course);	
 	}
 	
 	@PutMapping("/{id}/add-tests")
