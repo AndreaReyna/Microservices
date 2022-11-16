@@ -17,6 +17,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -45,6 +46,9 @@ public class Test {
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createAt;
+	
+	@Transient
+	private boolean answered;
 	
 	public Test() {
 		this.questions = new ArrayList<>();
@@ -88,7 +92,6 @@ public class Test {
 		questions.forEach(this::addQuestion);	
 	}
 	
-	
 	public Subject getSubject() {
 		return subject;
 	}
@@ -105,6 +108,14 @@ public class Test {
 	public void removeQuestion(Question question) {
 		this.questions.remove(question);
 		question.setTest(null);
+	}
+
+	public boolean isAnswered() {
+		return answered;
+	}
+
+	public void setAnswered(boolean answered) {
+		this.answered = answered;
 	}
 
 	@Override
