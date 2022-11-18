@@ -1,13 +1,14 @@
 package com.training.microservices.app.answers.models.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.training.microservices.commons.students.models.entity.Student;
 import com.training.microservices.commons.tests.models.entity.Question;
@@ -21,8 +22,11 @@ public class Answer {
 	private Long id;
 	private String text;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@Transient
 	private Student student;
+	
+	@Column(name="student_id")
+	private Long studentId;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	private Question question;
@@ -50,5 +54,11 @@ public class Answer {
 	}
 	public void setQuestion(Question question) {
 		this.question = question;
+	}
+	public Long getStudentId() {
+		return studentId;
+	}
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
 	}
 }

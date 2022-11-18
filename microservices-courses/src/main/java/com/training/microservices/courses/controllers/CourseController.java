@@ -4,12 +4,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +24,7 @@ import com.training.microservices.commons.controllers.CommonController;
 import com.training.microservices.commons.students.models.entity.Student;
 import com.training.microservices.commons.tests.models.entity.Test;
 import com.training.microservices.courses.models.entity.Course;
+import com.training.microservices.courses.models.entity.CourseStudent;
 import com.training.microservices.courses.services.CourseService;
 
 @RestController
@@ -27,6 +32,51 @@ public class CourseController extends CommonController<Course, CourseService> {
 	
 	@Value("${config.balancer.test}")
 	private String balancerTest;
+	
+	@GetMapping
+	@Override
+	public ResponseEntity<?> listAll(){
+		List<Course> courses = ((List<Course>) service.findAll()).stream().map(c -> {
+			c.getCourseStudents().forEach(cs ->{
+				Student student = new Student();
+				student.setId(cs.getStudentId());
+				c.addStudent(student);
+			});
+			return c;
+		}).collect(Collectors.toList());
+		return ResponseEntity.ok().body(courses);	
+	}
+	
+	@GetMapping("/paginated")
+	@Override
+	public ResponseEntity<?> listAll(Pageable pageable){
+		Page<Course> courses = service.findAll(pageable).map(course -> {
+			course.getCourseStudents().forEach(cs ->{
+				Student student = new Student();
+				student.setId(cs.getStudentId());
+				course.addStudent(student);
+			});
+			  
+			return course;
+	});
+		return ResponseEntity.ok().body(courses);	
+	}
+	
+	@GetMapping("/{id}")
+	@Override
+	public ResponseEntity<?> findById(@PathVariable Long id){
+		Optional<Course> o = service.findById(id);
+		if(o.isEmpty()) {
+			return ResponseEntity.notFound().build();	
+		}
+		Course course = o.get();
+		if (course.getCourseStudents().isEmpty() == false) {
+			List<Long> ids = course.getCourseStudents().stream().map(cs ->cs.getStudentId()).collect(Collectors.toList());
+		List<Student> students = (List<Student>) service.findStudentForCourse(ids);
+		course.setStudents(students);
+		}
+		return ResponseEntity.ok(course);	
+	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> modify(@Validated @RequestBody Course course, BindingResult result, @PathVariable Long id){
@@ -50,7 +100,10 @@ public class CourseController extends CommonController<Course, CourseService> {
 		}
 		Course course = c.get();
 		students.forEach(s ->{
-			course.addStudent(s);
+			CourseStudent courseStudent = new CourseStudent();
+			courseStudent.setStudentId(s.getId());
+			courseStudent.setCourse(course);
+			course.addCourseStudent(courseStudent);
 		});
 		return ResponseEntity.ok(service.save(course));	
 	}
@@ -62,7 +115,9 @@ public class CourseController extends CommonController<Course, CourseService> {
 			return ResponseEntity.notFound().build();
 		}
 		Course course = c.get();
-		course.removeStudent(student);
+		CourseStudent courseStudent = new CourseStudent();
+		courseStudent.setStudentId(student.getId());
+		course.removeCourseStudent(courseStudent);
 		return ResponseEntity.ok(service.save(course));	
 	}
 	
@@ -114,4 +169,9 @@ public class CourseController extends CommonController<Course, CourseService> {
 		return ResponseEntity.ok(response);
 	}
 	
+	@DeleteMapping("/delete-student/{id}")
+	public ResponseEntity<?> deleteCourseStudentById(@PathVariable Long id){
+		service.deleteCourseStudentById(id);
+		return ResponseEntity.noContent().build();
+	}
 }

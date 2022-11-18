@@ -7,9 +7,9 @@ import com.training.microservices.app.answers.models.entity.Answer;
 
 public interface AnswerRepository extends CrudRepository<Answer, Long> {
 	
-	@Query("SELECT a FROM Answer a JOIN FETCH a.student s JOIN FETCH a.question q JOIN fetch q.test t WHERE s.id =?1 and t.id=?2")
+	@Query("SELECT a FROM Answer a JOIN FETCH a.question q JOIN fetch q.test t WHERE a.studentId =?1 and t.id=?2")
 	public Iterable<Answer> findAnswerByStudentByTest(Long studentId, Long testId);
 	
-	@Query("SELECT t.id FROM Answer a JOIN a.student s JOIN a.question q JOIN q.test t WHERE s.id=?1 GROUP BY t.id")
+	@Query("SELECT t.id FROM Answer a JOIN a.question q JOIN q.test t WHERE a.studentId=?1 GROUP BY t.id")
 	public Iterable<Long> findTestsIdsWithAnswersByStudent(Long id);
 }

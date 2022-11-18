@@ -9,6 +9,6 @@ import com.training.microservices.commons.students.models.entity.Student;
 
 public interface StudentRepository extends PagingAndSortingRepository<Student, Long> {
 
-	@Query("SELECT s FROM Student s WHERE s.name like %?1% or s.lastName like %?1%")
+	@Query("SELECT s FROM Student s WHERE UPPER(s.name) like upper(concat('%', ?1, '%')) or UPPER(s.lastName) like upper(concat('%', ?1, '%'))")
 	public List<Student> findByNameOrLastName(String term);
 }

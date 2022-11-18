@@ -37,11 +37,11 @@ public class CommonController<E, S extends CommonService<E>> {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable Long id){
-		Optional<E> student = service.findById(id);
-		if(student.isEmpty()) {
+		Optional<E> entity = service.findById(id);
+		if(entity.isEmpty()) {
 			return ResponseEntity.notFound().build();	
 		}
-		return ResponseEntity.ok(student.get());	
+		return ResponseEntity.ok(entity.get());	
 	}
 	
 	@PostMapping
