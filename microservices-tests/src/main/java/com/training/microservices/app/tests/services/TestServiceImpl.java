@@ -29,4 +29,10 @@ public class TestServiceImpl extends CommonServiceImpl<Test, TestRepository> imp
 	public Iterable<Subject> findAllSubjects() {
 		return subjectRepository.findAll();
 	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Iterable<Long> findTestsIdsWithAnswersByQuestionIds(Iterable<Long> questionIds) {
+		return repository.findTestsIdsWithAnswersByQuestionIds(questionIds);
+	}
 }

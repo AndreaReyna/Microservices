@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -126,15 +125,17 @@ public class CourseController extends CommonController<Course, CourseService> {
 		Course course = service.findCourseByStudentId(id);
 		if (course != null) {
 			List<Long> testsIds = (List<Long>) service.getTestsIdsWithAnswersByStudent(id);
-			List<Test> tests = course.getTests().stream().map(test -> {
-				if(testsIds.contains(test.getId())) {
-					test.setAnswered(true);
-				}
-				return test;
-			}).collect(Collectors.toList());
-			course.setTests(tests);
+			if (testsIds != null && testsIds.size() > 0) {
+				List<Test> tests = course.getTests().stream().map(test -> {
+					if (testsIds.contains(test.getId())) {
+						test.setAnswered(true);
+					}
+					return test;
+				}).collect(Collectors.toList());
+				course.setTests(tests);
+			}
 		}
-		return ResponseEntity.ok(course);	
+		return ResponseEntity.ok(course);
 	}
 	
 	@PutMapping("/{id}/add-tests")

@@ -11,5 +11,8 @@ public interface TestRepository extends PagingAndSortingRepository<Test, Long> {
 	
 	@Query("SELECT t FROM Test t WHERE t.name like %?1%")
 	public List<Test> findByName(String term);
+	
+	@Query("SELECT t.id FROM Question q JOIN q.test t WHERE q.id in ?1 GROUP BY t.id")
+	public Iterable<Long> findTestsIdsWithAnswersByQuestionIds(Iterable<Long> questionIds);
 
 }

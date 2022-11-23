@@ -25,6 +25,7 @@ public class AnswerController {
 	public ResponseEntity<?> save(@RequestBody Iterable<Answer> answers){
 		answers = ((List<Answer>) answers).stream().map(a -> {
 			a.setStudentId(a.getStudent().getId());
+			a.setQuestionId(a.getQuestion().getId());
 			return a;
 		}).collect(Collectors.toList());
 		return ResponseEntity.status(HttpStatus.CREATED).body(answerService.saveAll(answers));
@@ -32,7 +33,8 @@ public class AnswerController {
 	
 	@GetMapping("/student/{studentId}/test/{testId}")
 	public ResponseEntity<?> getResponseByStudentByTest(@PathVariable Long studentId, @PathVariable Long testId){
-		return ResponseEntity.ok(answerService.findAnswerByStudentByTest(studentId, testId));
+		Iterable<Answer> answers = answerService.findAnswerByStudentByTest(studentId, testId);
+		return ResponseEntity.ok(answers);
 	}
 	
 	@GetMapping("/student/{studentId}/tests-answered")

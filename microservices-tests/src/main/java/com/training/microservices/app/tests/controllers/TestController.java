@@ -1,5 +1,6 @@
 package com.training.microservices.app.tests.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.training.microservices.app.tests.services.TestService;
@@ -49,4 +51,10 @@ public class TestController extends CommonController<Test, TestService>{
 	public ResponseEntity<?> getSubjects(){
 		return ResponseEntity.ok(service.findAllSubjects());
 	}
+	
+	@GetMapping("/answers-by-questions")
+	public ResponseEntity<?> getTestsIdsByQuestionsIdAnswers(@RequestParam List<Long> questionIds){
+		return ResponseEntity.ok(service.findTestsIdsWithAnswersByQuestionIds(questionIds));
+	}
+	
 }
