@@ -13,9 +13,9 @@ public interface AnswerRepository extends MongoRepository<Answer, String> {
 	@Query("{'studentId' : ?0}")
 	public Iterable<Answer> findByStudentId(Long studentId);
 
-	//@Query("SELECT a FROM Answer a JOIN FETCH a.question q JOIN fetch q.test t WHERE a.studentId =?1 and t.id=?2")
-	//public Iterable<Answer> findAnswerByStudentByTest(Long studentId, Long testId);
+	@Query("{'studentId' : ?0, 'question.test.id': ?1}")
+	public Iterable<Answer> findAnswerByStudentByTest(Long studentId, Long testId);
 	
-	//@Query("SELECT t.id FROM Answer a JOIN a.question q JOIN q.test t WHERE a.studentId=?1 GROUP BY t.id")
-	//public Iterable<Long> findTestsIdsWithAnswersByStudent(Long id);
+	@Query(value = "{'studentId': ?0}", fields = "{'question.test.id': 1}")
+	public Iterable<Answer> findTestsIdsWithAnswersByStudent(Long studentId);
 }

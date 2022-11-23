@@ -1,7 +1,6 @@
 package com.training.microservices.app.answers.models.entity;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.training.microservices.commons.students.models.entity.Student;
@@ -13,10 +12,8 @@ public class Answer {
 	@Id
 	private String id;
 	private String text;
-	@Transient
 	private Student student;
 	private Long studentId;
-	@Transient
 	private Question question;
 	private Long questionId;
 
