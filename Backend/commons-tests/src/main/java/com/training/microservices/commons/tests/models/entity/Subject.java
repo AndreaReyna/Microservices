@@ -23,7 +23,7 @@ public class Subject {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotEmpty
+	@NotEmpty(message = "The name field must not be empty")
 	private String name;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -1,5 +1,7 @@
 package com.training.microservices.app.answers.models.entity;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,6 +13,7 @@ public class Answer {
 
 	@Id
 	private String id;
+	@NotEmpty(message = "The text field must not be empty")
 	private String text;
 	private Student student;
 	private Long studentId;

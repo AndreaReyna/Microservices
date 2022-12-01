@@ -15,11 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.training.microservices.commons.services.CommonService;
 
-@RestController
 public class CommonController<E, S extends CommonService<E>> {
 	
 	@Autowired
@@ -62,7 +60,7 @@ public class CommonController<E, S extends CommonService<E>> {
 	protected ResponseEntity<?> validate(BindingResult result){
 		Map<String, Object> errors = new HashMap<>();
 		result.getFieldErrors().forEach(e ->{
-			errors.put(e.getField(), "El campo " + e.getField() + " " + e.getDefaultMessage());
+			errors.put(e.getField(), e.getDefaultMessage());
 		});
 		return ResponseEntity.badRequest().body(errors);
 	}

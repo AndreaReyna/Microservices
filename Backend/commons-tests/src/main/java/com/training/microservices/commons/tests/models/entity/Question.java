@@ -19,7 +19,7 @@ public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotEmpty
+	@NotEmpty(message = "The text field must not be empty")
 	private String text;
 	
 	@JsonIgnoreProperties(value = {"questions"})

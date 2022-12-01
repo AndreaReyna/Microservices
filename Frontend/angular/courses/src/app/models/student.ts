@@ -1,7 +1,7 @@
 export class Student {
     id:number;
     name:string;
-    lastname:string;
+    lastName:string;
     email:string;
     createAt:string;
     photoHashCode:number;

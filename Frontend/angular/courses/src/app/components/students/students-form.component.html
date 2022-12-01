@@ -1,0 +1,30 @@
+<div class="card mt-5">
+    <div class="card-header">
+        <button type="button" class="btn btn-dark" routerLink="/students">
+        <i class="bi bi-arrow-return-left"></i></button>
+        <div class="text-center mb-3"><h3>{{title}}</h3></div>
+    </div>
+    <div class="card-body">
+        <form class="row g-3 mt-1">
+            <div class="col-md-6">
+              <label for="name" class="form-label">First name</label>
+              <input type="text" class="form-control" id="name" name="name" [(ngModel)]="student.name">
+            </div>
+            <div class="col-md-6">
+                <label for="lastName" class="form-label">Last name</label>
+                <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="student.lastName">
+              </div>
+            <div class="col-md-12 mb-2">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="student.email">
+              </div>
+              <div class="alert alert-danger p-2 m-0" *ngIf="error && error.name">{{error.name}}</div>
+              <div class="alert alert-danger p-2 m-0" *ngIf="error && error.lastName">{{error.lastName}}</div>
+              <div class="alert alert-danger p-2 m-0" *ngIf="error && error.email">{{error.email}}</div>
+              <div class="text-center mt-4">
+              <button class="btn btn-dark" type="button" (click)="save()">Save</button>
+            </div>
+          </form>
+
+    </div>
+</div>

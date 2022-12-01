@@ -25,15 +25,15 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotEmpty
-	@Size(min = 3, max = 100)
+	@NotEmpty(message = "The name field must not be empty")
+	@Size(min = 3, max = 100, message="the size of the name field must be between 3 and 100")
 	private String name;
-	@NotEmpty
-	@Size(min = 3, max = 100)
+	@NotEmpty(message = "The last name field must not be empty")
+	@Size(min = 3, max = 100, message="The size of the last name field must be between 3 and 100")
 	private String lastName;
-	@NotEmpty
-	@Size(min = 3, max = 100)
-	@Email
+	@NotEmpty(message = "The email field must not be empty")
+	@Size(min = 3, max = 100, message="The size of the email field must be between 3 and 100")
+	@Email(message="The email must have a valid format")
 	private String email;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)

@@ -33,8 +33,8 @@ public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotEmpty
-	@Size(min = 3, max = 100)
+	@NotEmpty(message = "The name field must not be empty")
+	@Size(min = 3, max = 100, message="the size of the name field must be between 3 and 100")
 	private String name;
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)

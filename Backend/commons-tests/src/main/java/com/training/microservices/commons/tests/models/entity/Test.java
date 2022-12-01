@@ -31,8 +31,8 @@ public class Test {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotEmpty
-	@Size(min = 4, max = 50)
+	@NotEmpty(message = "The name field must not be empty")
+	@Size(min = 3, max = 100, message="the size of the name field must be between 3 and 100")
 	private String name;
 
 	@JsonIgnoreProperties(value = {"test"}, allowSetters = true)
@@ -40,7 +40,7 @@ public class Test {
 	private List<Question> questions;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@NotNull
+	@NotNull(message = "The subject field must not be null")
 	private Subject subject;
 	
 	@Column(name = "create_at")
