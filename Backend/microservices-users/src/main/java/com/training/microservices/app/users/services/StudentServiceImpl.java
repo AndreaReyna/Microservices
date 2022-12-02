@@ -3,6 +3,8 @@ package com.training.microservices.app.users.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +32,7 @@ public class StudentServiceImpl extends CommonServiceImpl<Student, StudentReposi
 	}
 
 	@Override
-	public void deleteCourseStudentByI(Long id) {
+	public void deleteCourseStudentById(Long id) {
 		clientCourse.deleteCourseStudentById(id);
 	}
 
@@ -38,8 +40,19 @@ public class StudentServiceImpl extends CommonServiceImpl<Student, StudentReposi
 	@Transactional()
 	public void deleteById(Long id) {
 		super.deleteById(id);
-		this.deleteCourseStudentByI(id);
+		this.deleteCourseStudentById(id);
 	}
-	
+
+	@Override
+	@Transactional(readOnly = true)
+	public Iterable<Student> findAll() {
+		return repository.findAllByOrderByIdAsc();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Student> findAll(Pageable peageable) {
+		return repository.findAllByOrderByIdAsc(peageable);
+	}
 	
 }

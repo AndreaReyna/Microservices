@@ -3,7 +3,8 @@
         <h4>{{title}}</h4>
     </div>
     <div class="card-body">
-        <table class="table table-dark table-hover table-striped">
+        <div class="alert alert-info" *ngIf="students?.length==0">There are no students in the system.</div>
+        <table class="table table-dark table-hover table-striped" *ngIf="students?.length>0">
             <thead>
                 <tr>
                     <th scope="col">Id</th>
@@ -11,6 +12,7 @@
                     <th scope="col">LastName</th>
                     <th scope="col">Email</th>
                     <th scope="col">Creation date</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -20,6 +22,8 @@
                     <td>{{student.lastName}}</td>
                     <td>{{student.email}}</td>
                     <td>{{student.createAt | date: 'longDate'}}</td>
+                    <td><i class="bi bi-pencil m-2" [routerLink]="['/students/form', student.id]" type="button"></i>
+                        <i class="bi bi-trash3 m-2" type="button" (click)="delete(student)"></i></td>
                 </tr>
             </tbody>
         </table>

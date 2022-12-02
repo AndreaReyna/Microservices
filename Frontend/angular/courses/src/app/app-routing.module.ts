@@ -9,6 +9,7 @@ const routes: Routes = [
   {path:'', pathMatch:'full', redirectTo: 'courses'},
   {path: 'students', component:StudentsComponent},
   {path: 'students/form', component:StudentsFormComponent},
+  {path: 'students/form/:id', component:StudentsFormComponent},
   {path: 'courses', component:CoursesComponent},
   {path: 'tests', component:TestsComponent},
 ];

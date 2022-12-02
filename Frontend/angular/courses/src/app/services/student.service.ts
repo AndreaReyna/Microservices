@@ -22,7 +22,7 @@ export class StudentService {
     return this.http.get<any>(`${this.baseEndpoint}/paginated`, {params:params});
   }
   public getById(id:number):Observable<Student>{
-    return this.http.get<Student>(this.baseEndpoint + '/' + id);
+    return this.http.get<Student>(`${this.baseEndpoint}/${id}`);
   }
   public save(student:Student):Observable<Student>{
     return this.http.post<Student>(this.baseEndpoint, student, {headers:this.headers});
