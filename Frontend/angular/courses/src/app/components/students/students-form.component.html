@@ -2,27 +2,27 @@
     <div class="card-header">
         <button type="button" class="btn btn-dark" routerLink="/students">
         <i class="bi bi-arrow-return-left"></i></button>
-        <div class="text-center mb-3"><h3>{{student.id? 'Modify Student' : 'New Student'}}</h3></div>
+        <div class="text-center mb-3"><h3>{{model.id? 'Modify Student' : 'New Student'}}</h3></div>
     </div>
     <div class="card-body">
         <form class="row g-3 mt-1">
             <div class="col-md-6">
               <label for="name" class="form-label">First Name</label>
-              <input type="text" class="form-control" id="name" name="name" [(ngModel)]="student.name">
+              <input type="text" class="form-control" id="name" name="name" [(ngModel)]="model.name">
             </div>
             <div class="col-md-6">
                 <label for="lastName" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="student.lastName">
+                <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="model.lastName">
               </div>
             <div class="col-md-12 mb-2">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="student.email">
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="model.email">
               </div>
               <div class="alert alert-danger p-2 m-0" *ngIf="error && error.name">{{error.name}}</div>
               <div class="alert alert-danger p-2 m-0" *ngIf="error && error.lastName">{{error.lastName}}</div>
               <div class="alert alert-danger p-2 m-0" *ngIf="error && error.email">{{error.email}}</div>
               <div class="text-center mt-4">
-              <button class="btn btn-dark" type="button" (click)="student.id ? modify() : save()">Save</button>
+              <button class="btn btn-dark" type="button" (click)="model.id ? modify() : save()">Save</button>
             </div>
           </form>
     </div>
