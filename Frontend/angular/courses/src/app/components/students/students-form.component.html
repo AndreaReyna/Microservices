@@ -21,6 +21,12 @@
               <div class="alert alert-danger p-2 m-0" *ngIf="error && error.name">{{error.name}}</div>
               <div class="alert alert-danger p-2 m-0" *ngIf="error && error.lastName">{{error.lastName}}</div>
               <div class="alert alert-danger p-2 m-0" *ngIf="error && error.email">{{error.email}}</div>
+              
+              <div class="mb-3">
+                <label for="formFile" class="form-label">Choose file</label>
+                <input (change)="selectPhoto($event)" class="form-control" type="file" id="formFile">
+              </div>
+
               <div class="text-center mt-4">
               <button class="btn btn-dark" type="button" (click)="model.id ? modify() : save()">Save</button>
             </div>
