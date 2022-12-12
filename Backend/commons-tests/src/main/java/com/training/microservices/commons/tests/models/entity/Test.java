@@ -41,7 +41,13 @@ public class Test {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@NotNull(message = "The subject field must not be null")
-	private Subject subject;
+	@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer"})
+	private Subject subjectParent;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@NotNull(message = "The subject field must not be null")
+	@JsonIgnoreProperties(value = {"handler", "hibernateLazyInitializer"})
+	private Subject subjectChild;
 	
 	@Column(name = "create_at")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -92,12 +98,20 @@ public class Test {
 		questions.forEach(this::addQuestion);	
 	}
 	
-	public Subject getSubject() {
-		return subject;
+	public Subject getSubjectParent() {
+		return subjectParent;
 	}
 
-	public void setSubject(Subject subject) {
-		this.subject = subject;
+	public void setSubjectParent(Subject subjectParent) {
+		this.subjectParent = subjectParent;
+	}
+
+	public Subject getSubjectChild() {
+		return subjectChild;
+	}
+
+	public void setSubjectChild(Subject subjectChild) {
+		this.subjectChild = subjectChild;
 	}
 
 	public void addQuestion(Question question) {

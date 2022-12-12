@@ -7,6 +7,7 @@ export class Test implements Generic{
     name:string;
     createAt:string;
     questions: Question[] = [];
-    subject: Subject[] = [];
+    subjectParent: Subject;
+    subjectChild: Subject;
     answered:boolean;
 }

@@ -38,7 +38,8 @@ public class TestController extends CommonController<Test, TestService>{
 		.forEach(testDb::removeQuestion);
 		
 		testDb.setQuestions(test.getQuestions());
-		
+		testDb.setSubjectChild(test.getSubjectChild());
+		testDb.setSubjectParent(test.getSubjectParent());
 		return ResponseEntity.ok(service.save(testDb));
 	}
 	

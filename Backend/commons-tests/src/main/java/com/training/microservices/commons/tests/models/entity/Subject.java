@@ -27,11 +27,11 @@ public class Subject {
 	private String name;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JsonIgnoreProperties(value = {"children"}, allowSetters = true)
+	@JsonIgnoreProperties(value = {"children", "handler", "hibernateLazyInitializer"}, allowSetters = true)
 	private Subject parent;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="parent", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties(value = {"parent"}, allowSetters = true)
+	@JsonIgnoreProperties(value = {"parent", "handler", "hibernateLazyInitializer"}, allowSetters = true)
 	private List<Subject> children;
 	
 	public Subject() {

@@ -1,1 +1,41 @@
-<p>tests works!</p>
+<div class="card mt-5">
+    <div class="card-header text-center">
+        <h4>{{title}}</h4>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-info" *ngIf="list?.length==0">There are no tests in the system.</div>
+        <table class="table table-dark table-hover table-striped" *ngIf="list?.length>0">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Subjects</th>
+                    <th scope="col">Creation date</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let test of list">
+                    <td>{{test.id}}</td>
+                    <td>{{test.name}}</td>
+                    <td>{{test.subjectParent?.name}} -> {{test.subjectChild?.name}}</td>
+                    <td>{{test.createAt | date: 'longDate'}}</td>
+                    <td><i class="bi bi-pencil m-2" [routerLink]="['/tests/form', test.id]" type="button"></i>
+                        <i class="bi bi-trash3 m-2" type="button" (click)="delete(test)"></i></td>
+                </tr>
+            </tbody>
+        </table>
+        <mat-paginator [length]="totalRecords"
+              [pageSize]="totalPerPage"
+              [pageIndex]="actualPage"
+              [pageSizeOptions]="pageSizeOptions"
+              (page)="paginate($event)"
+              aria-label="Select page"
+              showFirstLastButtons
+              class="float-left mx-2">
+        </mat-paginator>
+        <div class="text-center">
+        <button class="btn btn-dark" routerLink="/tests/form">New test</button>
+        </div>
+    </div>
+</div>

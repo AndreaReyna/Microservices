@@ -4,6 +4,7 @@ import { CoursesFormComponent } from './components/courses/courses-form.componen
 import { CoursesComponent } from './components/courses/courses.component';
 import { StudentsFormComponent } from './components/students/students-form.component';
 import { StudentsComponent } from './components/students/students.component';
+import { TestsFormComponent } from './components/tests/tests-form.component';
 import { TestsComponent } from './components/tests/tests.component';
 
 const routes: Routes = [
@@ -15,6 +16,8 @@ const routes: Routes = [
   {path: 'courses/form', component:CoursesFormComponent},
   {path: 'courses/form/:id', component:CoursesFormComponent},
   {path: 'tests', component:TestsComponent},
+  {path: 'tests/form', component:TestsFormComponent},
+  {path: 'tests/form/:id', component:TestsFormComponent},
 ];
 
 @NgModule({
