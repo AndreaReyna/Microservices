@@ -10,6 +10,7 @@
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Subjects</th>
+                    <th scope="col">Questions</th>
                     <th scope="col">Creation date</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -19,6 +20,7 @@
                     <td>{{test.id}}</td>
                     <td>{{test.name}}</td>
                     <td>{{test.subjectParent?.name}} -> {{test.subjectChild?.name}}</td>
+                    <td>{{test.questions.length}}</td>
                     <td>{{test.createAt | date: 'longDate'}}</td>
                     <td><i class="bi bi-pencil m-2" [routerLink]="['/tests/form', test.id]" type="button"></i>
                         <i class="bi bi-trash3 m-2" type="button" (click)="delete(test)"></i></td>

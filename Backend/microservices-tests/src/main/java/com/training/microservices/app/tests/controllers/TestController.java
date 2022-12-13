@@ -2,6 +2,7 @@ package com.training.microservices.app.tests.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.training.microservices.app.tests.services.TestService;
 import com.training.microservices.commons.controllers.CommonController;
+import com.training.microservices.commons.tests.models.entity.Question;
 import com.training.microservices.commons.tests.models.entity.Test;
 
 @RestController
@@ -33,9 +35,10 @@ public class TestController extends CommonController<Test, TestService>{
 		Test testDb = o.get();
 		testDb.setName(test.getName());
 		
-		testDb.getQuestions().stream()
-		.filter(q -> !test.getQuestions().contains(q))
-		.forEach(testDb::removeQuestion);
+		List<Question> deleted = testDb.getQuestions().stream()
+		.filter(q -> !test.getQuestions().contains(q)).collect(Collectors.toList());
+		
+		deleted.forEach(testDb::removeQuestion);
 		
 		testDb.setQuestions(test.getQuestions());
 		testDb.setSubjectChild(test.getSubjectChild());

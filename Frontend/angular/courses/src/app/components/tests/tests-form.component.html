@@ -1,35 +1,73 @@
 <div class="card mt-5">
-    <div class="card-header">
-        <button type="button" class="btn btn-dark" routerLink="/tests">
-        <i class="bi bi-arrow-return-left"></i></button>
-        <div class="text-center mb-3"><h3>{{model.id? 'Modify Test' : 'New Test'}}</h3></div>
+  <div class="card-header">
+    <button type="button" class="btn btn-dark" routerLink="/tests">
+      <i class="bi bi-arrow-return-left"></i>
+    </button>
+    <div class="text-center mb-3">
+      <h3>{{ model.id ? "Modify Test" : "New Test" }}</h3>
     </div>
-    <div class="card-body d-flex justify-content-center">
-        <form class="row g-3 mt-1">
-            <div class="text-center">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control col-md-6" id="name" name="name" [(ngModel)]="model.name">
+  </div>
+  <div class="card-body d-flex justify-content-center">
+    <form class="row g-3 mt-1">
+      <div class="text-center">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control col-md-6" id="name" name="name" [(ngModel)]="model.name" />
+      </div>
+      <div class="form-group">
+        <label for="subjectParent">Subject parent</label>
+        <select (change)="children()" [compareWith]="compareSubject" [(ngModel)]="model.subjectParent"
+          class="form-control" name="subjectParent" id="subjectParent">
+          <option [ngValue]="undefined">---Select a parent subject---</option>
+          <option *ngFor="let subject of subjectsParent" [ngValue]="subject">
+            {{ subject.name }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="subjectChild">Subject child</label>
+        <select [(ngModel)]="model.subjectChild" [compareWith]="compareSubject" class="form-control" name="subjectChild"
+          id="subjectChild">
+          <option [ngValue]="undefined">---Select a child subject---</option>
+          <option *ngFor="let subject of subjectsChild" [ngValue]="subject">
+            {{ subject.name }}
+          </option>
+        </select>
+      </div>
+      <div class="text-center m-2">
+        <button class="btn btn-dark" type="button" (click)="addQuestion()">
+          Add Question
+        </button>
+      </div>        
+        <div *ngFor="let question of model.questions; let i = index">
+          <div class="row d-flex align-items-center">
+            <div class="col-sm-1">
+              <label>Question {{i+1}}</label>
             </div>
-            <div class="form-group">
-              <label for="subjectParent">Subject parent</label>
-            <select (change)="children()" [compareWith]="compareSubject" [(ngModel)]="model.subjectParent" class="form-control" name="subjectParent" id="subjectParent">
-              <option [ngValue]="undefined">---Select a parent subject---</option>
-              <option *ngFor="let subject of subjectsParent" [ngValue]="subject">{{subject.name}}</option>
-            </select>
-          </div>
-          <div class="form-group mb-3">
-            <label for="subjectChild">Subject child</label>
-          <select [(ngModel)]="model.subjectChild" [compareWith]="compareSubject" class="form-control" name="subjectChild" id="subjectChild">
-            <option [ngValue]="undefined">---Select a child subject---</option>
-            <option *ngFor="let subject of subjectsChild" [ngValue]="subject">{{subject.name}}</option>
-          </select>
+            <div class="col-sm-10 mt-1"> 
+              <input class="form-control" type="text" value="{{question.text}}" class="form-control" (change)="assignText(question, $event)">
         </div>
-              <div class="alert alert-danger p-2 m-0" *ngIf="error && error.name">{{error.name}}</div>
-              <div class="alert alert-danger p-2 m-0" *ngIf="error?.subjectChild">{{error.subjectChild}}</div>
-              <div class="alert alert-danger p-2 m-0" *ngIf="error?.subjectParentd">{{error.subjectParent}}</div>
-              <div class="text-center mt-4">
-              <button class="btn btn-dark" type="button" (click)="model.id ? modify() : save()">Save</button>
-            </div>
-          </form>
+        <div class="col-sm-1 mt-1 text-center"> 
+          <i class="bi bi-trash3" type="button" (click)="deleteQuestion(question)"></i>
+        </div>
+      </div>
     </div>
+      <div class="col-md-12">
+        <div class="alert alert-danger p-2 m-0" *ngIf="error && error.name">
+          {{ error.name }}
+        </div>
+        <div class="alert alert-danger p-2 m-0" *ngIf="error?.subjectChild">
+          {{ error.subjectChild }}
+        </div>
+        <div class="alert alert-danger p-2 m-0" *ngIf="error?.subjectParentd">
+          {{ error.subjectParent }}
+        </div>
+        <div class="alert alert-danger p-2 m-0" *ngIf="errorQuestions">
+          {{ errorQuestions }}
+        </div>
+      </div>
+      <div class="text-center m-2">
+        <button class="btn btn-dark" type="button" (click)="model.id ? modify() : save()">Save</button>
+      </div>
+    </form>
+  </div>
 </div>
