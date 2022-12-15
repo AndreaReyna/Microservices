@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddStudentsComponent } from './components/courses/add-students.component';
 import { CoursesFormComponent } from './components/courses/courses-form.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { StudentsFormComponent } from './components/students/students-form.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'tests', component:TestsComponent},
   {path: 'tests/form', component:TestsFormComponent},
   {path: 'tests/form/:id', component:TestsFormComponent},
+  {path: 'courses/add-students/:id', component:AddStudentsComponent},
 ];
 
 @NgModule({

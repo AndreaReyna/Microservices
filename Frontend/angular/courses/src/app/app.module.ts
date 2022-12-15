@@ -9,12 +9,18 @@ import { CoursesComponent } from './components/courses/courses.component';
 import { TestsComponent } from './components/tests/tests.component';
 import { LayoutModule } from './layout/layout.module';
 import { StudentsFormComponent } from './components/students/students-form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoursesFormComponent } from './components/courses/courses-form.component';
 import { TestsFormComponent } from './components/tests/tests-form.component';
-
+import {MatTableModule} from '@angular/material/table';
+import {MatInputModule} from '@angular/material/input';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import {MatTabsModule} from '@angular/material/tabs';
+import { AddStudentsComponent } from './components/courses/add-students.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +29,8 @@ import { TestsFormComponent } from './components/tests/tests-form.component';
     TestsComponent,
     StudentsFormComponent,
     CoursesFormComponent,
-    TestsFormComponent
+    TestsFormComponent,
+    AddStudentsComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +39,14 @@ import { TestsFormComponent } from './components/tests/tests-form.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTableModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatTabsModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
