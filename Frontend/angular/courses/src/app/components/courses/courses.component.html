@@ -10,6 +10,7 @@
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Students</th>
+                    <th scope="col">Tests</th>
                     <th scope="col">Creation date</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -19,6 +20,7 @@
                     <td>{{course.id}}</td>
                     <td>{{course.name}}</td>
                     <td><button class="btn btn-secondary btn-sm" [routerLink]="['/courses/add-students', course.id]">add ({{course.students.length}})</button></td>
+                    <td><button class="btn btn-secondary btn-sm" [routerLink]="['/courses/add-tests', course.id]">add ({{course.tests.length}})</button></td>
                     <td>{{course.createAt | date: 'longDate'}}</td>
                     <td><i class="bi bi-pencil m-2" [routerLink]="['/courses/form', course.id]" type="button"></i>
                         <i class="bi bi-trash3 m-2" type="button" (click)="delete(course)"></i></td>

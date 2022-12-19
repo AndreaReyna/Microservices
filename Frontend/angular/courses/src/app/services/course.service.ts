@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { BASE_ENDPOINT } from '../config/app';
 import { Course } from '../models/course';
 import { Student } from '../models/student';
+import { Test } from '../models/test';
 import { CommonService } from './common.service';
 
 @Injectable({
@@ -26,6 +27,18 @@ export class CourseService extends CommonService<Course>{
   deleteStudent(course: Course, student: Student): Observable<Course> {
     return this.http.put<Course>(`${this.baseEndpoint}/${course.id}/remove-student`,
     student,
+    {headers: this.headers});
+  }
+
+  addTests(course:Course, tests:Test[]): Observable<Course> {
+    return this.http.put<Course>(`${this.baseEndpoint}/${course.id}/add-tests`,
+    tests,
+     {headers: this.headers});
+  }
+
+  deleteTests(course:Course, test:Test):Observable<Course>{
+    return this.http.put<Course>(`${this.baseEndpoint}/${course.id}/remove-test`,
+    test,
     {headers: this.headers});
   }
 }

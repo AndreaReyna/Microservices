@@ -9,11 +9,11 @@
     <mat-tab-group dynamicHeight [(selectedIndex)]="tabIndex">
         <mat-tab label="Add Students">
 
- <mat-form-field class=" mx-3 mt-5 col-md-4">
+ <mat-form-field class="mx-3 mt-5 col-md-4">
     <input matInput placeholder="Search students" (keyup)="filter($event.target.value)">
 </mat-form-field>
 
-<table mat-table [dataSource]="studentsAdd" class="mat-elevation-z8 mx-3" style="width: 75%;">   
+<table mat-table [dataSource]="studentsAdd" class="mat-elevation-z8 m-3" style="width: 75%;">   
   <ng-container matColumnDef="selection">
         <th mat-header-cell *matHeaderCellDef> 
             <mat-checkbox (change)="$event? selectUnselectAll(): null"
@@ -51,7 +51,7 @@
 
 <mat-tab label="Students">
 
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 mx-3" style="width: 75%;">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 m-3" style="width: 75%;">
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> Id </th>

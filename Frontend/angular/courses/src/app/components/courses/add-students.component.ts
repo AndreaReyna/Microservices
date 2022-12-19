@@ -16,26 +16,26 @@ import Swal from 'sweetalert2';
 })
 export class AddStudentsComponent implements OnInit {
 
-  course:Course;
-  studentsAdd:Student[] = [];
-  students:Student[] = [];
-  
+  course: Course;
+  studentsAdd: Student[] = [];
+  students: Student[] = [];
+
   dataSource: MatTableDataSource<Student>;
-  @ViewChild(MatPaginator, {static:true}) paginator: MatPaginator;
-  pageSizeOptions: number[] = [3,5,10,20,50];
-  
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  pageSizeOptions: number[] = [3, 5, 10, 20, 50];
+
   tabIndex = 0;
 
-  showColumns:string[] = ['name', 'lastName', 'selection'];
-  showColumnsStudents:string[] = ['id', 'name', 'lastName', 'email', 'delete'];
+  showColumns: string[] = ['name', 'lastName', 'selection'];
+  showColumnsStudents: string[] = ['id', 'name', 'lastName', 'email', 'delete'];
 
-  selection:SelectionModel<Student> = new SelectionModel<Student>(true, []);
+  selection: SelectionModel<Student> = new SelectionModel<Student>(true, []);
 
   constructor(private route:ActivatedRoute, private courseService:CourseService, private studentService:StudentService){}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      const id:number = +params.get('id');
+      const id: number = +params.get('id');
       this.courseService.getById(id).subscribe(c => {
         this.course = c;
         this.students = this.course.students;
@@ -44,28 +44,26 @@ export class AddStudentsComponent implements OnInit {
     });
   }
 
-  startPaginator():void{
+  private startPaginator(): void{
     this.dataSource = new MatTableDataSource<Student>(this.students);
     this.dataSource.paginator = this.paginator;
   }
 
-  filter(name:string):void{
+  filter(name: string):void {
     name = name !== undefined? name.trim(): '';
-    if(name!==''){
+    if(name !== ''){
       this.studentService.filterByName(name)
-      .subscribe(students => 
-        this.studentsAdd = students.filter(s => {
-          let filter = true;
-          this.students.forEach(cs =>{
-            if (s.id === cs.id) {
-              filter = false;
-            }
-          });
-          return filter;
-        }));
+      .subscribe(students => this.studentsAdd = students.filter(s => {
+        let filter = true;
+        this.students.forEach(cs => {
+          if(s.id === cs.id){
+            filter = false;
+          }
+        });
+        return filter;
+      }));
     }
   }
-
 
   isAllSelected(): boolean {
     const numSelected = this.selection.selected.length;
@@ -78,7 +76,6 @@ export class AddStudentsComponent implements OnInit {
     this.selection.clear(): 
     this.studentsAdd.forEach(s => this.selection.select(s));
   }
-
 
   add(): void {
     console.log(this.selection.selected);
@@ -94,8 +91,7 @@ export class AddStudentsComponent implements OnInit {
       this.studentsAdd = [];
       this.selection.clear();
     },
-    e => {
-       
+    e => {     
       if(e.status === 500){
         const mensaje = e.error.message as string;
         if(mensaje.indexOf('ConstraintViolationException') > -1){
@@ -110,7 +106,6 @@ export class AddStudentsComponent implements OnInit {
   }
 
   deleteStudent(student: Student): void {
-
     Swal.fire({
       title: 'Warning:',
       text: `¿Surely you want to remove ${student.name} ?`,
@@ -121,7 +116,6 @@ export class AddStudentsComponent implements OnInit {
       confirmButtonText: 'yes, delete it!'
     }).then((result) => {
       if (result.value) {
-
         this.courseService.deleteStudent(this.course, student)
         .subscribe(course => {
           this.students = this.students.filter(s => s.id !== student.id);
@@ -132,7 +126,6 @@ export class AddStudentsComponent implements OnInit {
             'success'
           );
         });    
-
       }
     });
   }

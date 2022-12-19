@@ -21,6 +21,8 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
 import { AddStudentsComponent } from './components/courses/add-students.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { AddTestsComponent } from './components/courses/add-tests.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +32,8 @@ import { AddStudentsComponent } from './components/courses/add-students.componen
     StudentsFormComponent,
     CoursesFormComponent,
     TestsFormComponent,
-    AddStudentsComponent
+    AddStudentsComponent,
+    AddTestsComponent
   ],
   imports: [
     BrowserModule,
@@ -46,7 +49,8 @@ import { AddStudentsComponent } from './components/courses/add-students.componen
     MatCheckboxModule,
     ReactiveFormsModule,
     MatTabsModule,
-    MatCardModule
+    MatCardModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]
