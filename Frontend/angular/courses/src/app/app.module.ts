@@ -20,9 +20,13 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { AddStudentsComponent } from './components/courses/add-students.component';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AddTestsComponent } from './components/courses/add-tests.component';
+import { AnswerTestComponent } from './components/students/answer-test.component';
+import { AnswerTestModalComponent } from './components/students/answer-test-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,8 +37,11 @@ import { AddTestsComponent } from './components/courses/add-tests.component';
     CoursesFormComponent,
     TestsFormComponent,
     AddStudentsComponent,
-    AddTestsComponent
+    AddTestsComponent,
+    AnswerTestComponent,
+    AnswerTestModalComponent
   ],
+  entryComponents:[AnswerTestModalComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -50,7 +57,9 @@ import { AddTestsComponent } from './components/courses/add-tests.component';
     ReactiveFormsModule,
     MatTabsModule,
     MatCardModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatDialogModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

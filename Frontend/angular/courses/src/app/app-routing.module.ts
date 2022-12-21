@@ -4,6 +4,7 @@ import { AddStudentsComponent } from './components/courses/add-students.componen
 import { AddTestsComponent } from './components/courses/add-tests.component';
 import { CoursesFormComponent } from './components/courses/courses-form.component';
 import { CoursesComponent } from './components/courses/courses.component';
+import { AnswerTestComponent } from './components/students/answer-test.component';
 import { StudentsFormComponent } from './components/students/students-form.component';
 import { StudentsComponent } from './components/students/students.component';
 import { TestsFormComponent } from './components/tests/tests-form.component';
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'tests/form/:id', component:TestsFormComponent},
   {path: 'courses/add-students/:id', component:AddStudentsComponent},
   {path: 'courses/add-tests/:id', component:AddTestsComponent},
+  {path: 'students/answer-test/:id', component:AnswerTestComponent},
 ];
 
 @NgModule({

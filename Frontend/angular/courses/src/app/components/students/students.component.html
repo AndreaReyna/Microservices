@@ -13,6 +13,7 @@
                     <th scope="col">LastName</th>
                     <th scope="col">Email</th>
                     <th scope="col">Creation date</th>
+                    <th scope="col">Tests</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -27,6 +28,7 @@
                     <td>{{student.lastName}}</td>
                     <td>{{student.email}}</td>
                     <td>{{student.createAt | date: 'longDate'}}</td>
+                    <td><button class="btn btn-secondary btn-sm" [routerLink]="['/students/answer-test', student.id]">Answer</button></td>
                     <td><i class="bi bi-pencil m-2" [routerLink]="['/students/form', student.id]" type="button"></i>
                         <i class="bi bi-trash3 m-2" type="button" (click)="delete(student)"></i></td>
                 </tr>
