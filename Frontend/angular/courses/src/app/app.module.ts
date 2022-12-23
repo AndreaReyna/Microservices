@@ -27,6 +27,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AddTestsComponent } from './components/courses/add-tests.component';
 import { AnswerTestComponent } from './components/students/answer-test.component';
 import { AnswerTestModalComponent } from './components/students/answer-test-modal.component';
+import { ShowTestModalComponent } from './components/students/show-test-modal.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,9 +40,10 @@ import { AnswerTestModalComponent } from './components/students/answer-test-moda
     AddStudentsComponent,
     AddTestsComponent,
     AnswerTestComponent,
-    AnswerTestModalComponent
+    AnswerTestModalComponent,
+    ShowTestModalComponent
   ],
-  entryComponents:[AnswerTestModalComponent],
+  entryComponents:[AnswerTestModalComponent, ShowTestModalComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

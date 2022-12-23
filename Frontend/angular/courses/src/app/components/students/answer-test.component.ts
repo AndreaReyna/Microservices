@@ -12,6 +12,7 @@ import { CourseService } from 'src/app/services/course.service';
 import { StudentService } from 'src/app/services/student.service';
 import Swal from 'sweetalert2';
 import { AnswerTestModalComponent } from './answer-test-modal.component';
+import { ShowTestModalComponent } from './show-test-modal.component';
 
 @Component({
   selector: 'app-answer-test',
@@ -69,6 +70,19 @@ export class AnswerTestComponent implements OnInit {
           console.log(a);
         });
       }
+    });
+  }
+
+  showTest(test:Test): void {
+    this.answerService.getAnswersByStudentByTest(this.student, test)
+    .subscribe(as => {
+      const modalRef = this.dialog.open(ShowTestModalComponent, {
+        width: '750px',
+        data: {curso: this.course, examen: test, respuestas: as}
+      });
+      modalRef.afterClosed().subscribe(() => {
+        console.log('Modal show test closed');
+      })
     });
   }
 }
